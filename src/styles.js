@@ -1,20 +1,14 @@
 import {makeStyles} from '@material-ui/core/styles';
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import React from "react";
 
 const styles = () => ({
     leftToolBar: {
         flex: 1,
     },
-    disableTransition: {
-        transition: 'none',
+    shortArticleCard: {
+        width: '30%',
+        margin: '20px',
     },
-    appBar: {
-        height: 'center',
-    },
-    articleCard: {
-        minWidth: '275px',
-        display: 'inline-block',
+    longArticleCard: {
         margin: '20px',
     },
     form: {
@@ -28,8 +22,8 @@ const styles = () => ({
     createArticleIcon: {
         fontSize: 70
     },
-    createArticleCard: {
-        display: 'inline-block',
+    loginCard: {
+        textAlign: 'center',
     }
 });
 

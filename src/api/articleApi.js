@@ -1,26 +1,30 @@
-import {getHeadersWithAuth} from "./util";
+import {getBaseHeaders, getHeadersWithAuth} from "./util";
+import {handleError} from "./ErrorHandler";
 
 export const createArticle = (article) =>
     fetch('/article', {
         method: "POST",
         headers: getHeadersWithAuth(),
-        body: article,
+        body: JSON.stringify(article),
     })
+        .then(response => handleError(response))
         .then(response => response.json())
 
 export const getArticleById = (id) =>
     fetch('/article/' + id, {
         method: "GET",
-        headers: getHeadersWithAuth(),
+        headers: getBaseHeaders(),
     })
+        .then(response => handleError(response))
         .then(response => response.json())
 
 export const updateArticleById = (id, article) =>
     fetch('/article/' + id, {
         method: "PUT",
         headers: getHeadersWithAuth(),
-        body: article
+        body: JSON.stringify(article),
     })
+        .then(response => handleError(response))
         .then(response => response.json())
 
 export const deleteArticleById = (id) =>
@@ -28,6 +32,7 @@ export const deleteArticleById = (id) =>
         method: "DELETE",
         headers: getHeadersWithAuth(),
     })
+        .then(response => handleError(response))
         .then(response => response.json())
 
 export const likeArticleById = (id) =>
@@ -35,11 +40,23 @@ export const likeArticleById = (id) =>
         method: "PUT",
         headers: getHeadersWithAuth(),
     })
+        .then(response => handleError(response))
         .then(response => response.json())
 
-export const getAllArticlesForUser = () =>
+export const getAllArticles = () =>
+    fetch('/article/all', {
+        method: "GET",
+        headers: getBaseHeaders(),
+    })
+        .then(response => handleError(response))
+        .then(response => response.json())
+        .then(json => json.collection)
+
+export const getAllLikedArticlesForUser = () =>
     fetch('/article/me', {
         method: "GET",
         headers: getHeadersWithAuth(),
     })
+        .then(response => handleError(response))
         .then(response => response.json())
+        .then(json => json.collection)

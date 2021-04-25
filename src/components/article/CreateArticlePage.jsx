@@ -6,20 +6,23 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import {Box, Grid} from "@material-ui/core";
 import {createArticle} from "../../api/articleApi";
+import {useHistory} from 'react-router-dom';
 
 export const CreateArticlePage = () => {
     const classes = useStyles();
+    const history = useHistory();
     const [articleName, setArticleName] = useState('');
     const [articleText, setArticleText] = useState('');
 
     const handleClick = (event) => {
         event.preventDefault();
-        const article = Object();
-        article.name = articleName;
-        article.text = articleText;
-        article.keyWords = ['undefined'];
-        createArticle(JSON.stringify(article))
-            .then(r => console.log("Article {} has been publiched", articleName));
+        createArticle({
+                name: articleName,
+                text: articleText,
+                keyWords: ['undefined']
+        })
+            .then(article => history.push('/article/' + article.id))
+            .catch(err => console.log("Article {} hasn't been published, error: {}", articleName, err));
     };
 
     return (

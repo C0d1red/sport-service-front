@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useStyles} from "../../styles";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,31 +6,46 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import {LoginCard} from "../register/LoginCard";
 import {NavLink} from "react-router-dom";
+import {isJWTInStorage} from "../../api/util";
+import {ProfileMenu} from "./ProfileMenu";
 
 export const MenuBar = () => {
     const classes = useStyles();
-    const [isLogin, setLogin] = React.useState(false);
+    const [isLoginClicked, setLoginClicked] = React.useState(false);
+    const [isLoggedIn, setLoggedIn] = React.useState(isJWTInStorage());
 
-    const handleLoginClick = () => {
-        setLogin(true);
+    useEffect(() => {
+        setLoggedIn(isJWTInStorage())
+    }, [isLoggedIn])
+
+    const openLoginCard = () => {
+        setLoginClicked(true);
     };
 
-    const handleLoginClose = () => {
-        setLogin(false);
+    const closeLoginCard = () => {
+        setLoginClicked(false);
+    };
+
+    const handleLogin = () => {
+        setLoginClicked(false);
+        setLoggedIn(true);
     };
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <ButtonGroup size={"large"} variant="text" aria-label="text primary button group" className={classes.leftToolBar}>
+                    <ButtonGroup fullWidth size={"large"} variant="text" className={classes.leftToolBar}>
                         <Button component={NavLink} color="inherit" to={"/article"}>Статьи</Button>
-                        <Button component={NavLink} color="inherit" to="/profile">Профиль</Button>
                     </ButtonGroup>
-                    <Button color="inherit" onClick={handleLoginClick}>Войти</Button>
+                    {isLoggedIn ?
+                        <ProfileMenu setLoggedIn={setLoggedIn}/>
+                        :
+                        <Button color="inherit" onClick={openLoginCard}>Войти</Button>
+                    }
                 </Toolbar>
             </AppBar>
-            <LoginCard open={isLogin} handleClose={handleLoginClose}/>
+            <LoginCard open={isLoginClicked} handleClose={closeLoginCard} handleLogin={handleLogin}/>
         </div>
     );
 }
