@@ -5,8 +5,12 @@ const styles = () => ({
         flex: 1,
     },
     shortArticleCard: {
-        width: '30%',
+        width: '15vw',
+        height: '15vw',
         margin: '20px',
+        display:'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column'
     },
     longArticleCard: {
         margin: '20px',
@@ -22,8 +26,17 @@ const styles = () => ({
     createArticleIcon: {
         fontSize: 70
     },
-    loginCard: {
-        textAlign: 'center',
+    profileLargeIcon: {
+        fontSize: 200,
+        textAlign: 'center'
+    },
+    bottomButton: {
+        position: 'absolute',
+        bottom: 0
+    },
+    maxSize: {
+        width: '100%',
+        height: '100%'
     }
 });
 

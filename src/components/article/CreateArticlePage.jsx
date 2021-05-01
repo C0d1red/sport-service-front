@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
-import {useStyles} from "../../styles";
+import {useHistory} from 'react-router-dom';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import {Box, Grid} from "@material-ui/core";
+import {useStyles} from "../../styles";
 import {createArticle} from "../../api/articleApi";
-import {useHistory} from 'react-router-dom';
 
 export const CreateArticlePage = () => {
     const classes = useStyles();
     const history = useHistory();
     const [articleName, setArticleName] = useState('');
     const [articleText, setArticleText] = useState('');
+    const [tags, setTags] = useState('');
 
-    const handleClick = (event) => {
+    const handlePublishClick = (event) => {
         event.preventDefault();
         createArticle({
                 name: articleName,
@@ -49,8 +50,18 @@ export const CreateArticlePage = () => {
                                            fullWidth={true}
                                 />
                             </div>
+                            <div>
+                                <TextField label="Тэги"
+                                           rows={1}
+                                           value={tags}
+                                           onInput={e => {
+                                               setTags(e.target.value)
+                                           }}
+                                           fullWidth={true}
+                                />
+                            </div>
                             <div className={classes.center}>
-                                <Button onClick={handleClick} variant="contained" color={"primary"}>
+                                <Button onClick={handlePublishClick} variant="contained" color={"primary"}>
                                     Опубликовать
                                 </Button>
                             </div>

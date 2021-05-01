@@ -1,20 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {ArticleCard} from "./ArticleCard";
+import React from 'react';
 import {Grid} from "@material-ui/core";
-import {getAllArticles} from "../../api/articleApi";
+import {ShortArticleCard} from "./ShortArticleCard";
 
-export const ArticlesTable = () => {
-    const [articles, setArticles] = useState([]);
-
-    useEffect(() => {
-        getAllArticles()
-            .then(articles => setArticles(articles));
-    }, [])
-
+export const ArticlesTable = (props) => {
+    const {articles} = props;
     return (
         <Grid container justify="center">
             {articles.map((article) =>
-                <ArticleCard id={article.id} name={article.name} text={article.text}/>
+                <ShortArticleCard
+                    id={article.id}
+                    name={article.name}
+                    text={article.text}
+                />
                 )}
         </Grid>
     );

@@ -1,19 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {IconButton} from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {deleteJWT} from "../../api/util";
-import {useHistory} from "react-router-dom";
 
 export const ProfileMenu = (props) => {
-    const {setLoggedIn} = props;
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const {handleLogout} = props;
+    const [anchorEl, setAnchorEl] = useState(null);
     const history = useHistory();
-
-    const handleMenuClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -24,11 +19,14 @@ export const ProfileMenu = (props) => {
         setAnchorEl(null);
     };
 
-    const handleExitClick = () => {
-        deleteJWT();
-        setLoggedIn(false);
+    const handleLogoutClick = () => {
+        handleLogout();
         history.push('/');
         setAnchorEl(null);
+    };
+
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
     };
 
     return (
@@ -40,7 +38,7 @@ export const ProfileMenu = (props) => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleProfileClick}>Профиль</MenuItem>
-                <MenuItem onClick={handleExitClick}>Выйти</MenuItem>
+                <MenuItem onClick={handleLogoutClick}>Выйти</MenuItem>
             </Menu>
             <IconButton onClick={handleMenuClick}>
                 <AccountCircleIcon/>

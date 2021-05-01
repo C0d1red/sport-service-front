@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {Typography} from "@material-ui/core";
 import {useStyles} from "../../styles";
 import {register} from "../../api/userApi";
-import {Typography} from "@material-ui/core";
 
 export const RegisterForm = (props) => {
     const {handleLogin} = props;
@@ -15,6 +15,7 @@ export const RegisterForm = (props) => {
 
     const handleRegisterClick = (event) => {
         event.preventDefault();
+
         if(firstPassword !== secondPassword) {
             setError(true);
             return;

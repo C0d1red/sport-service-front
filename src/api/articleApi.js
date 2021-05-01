@@ -1,62 +1,33 @@
-import {getBaseHeaders, getHeadersWithAuth} from "./util";
-import {handleError} from "./ErrorHandler";
+import {delWithAuth, get, getWithAuth, postWithAuth, putWithAuth} from "./baseApi";
 
 export const createArticle = (article) =>
-    fetch('/article', {
-        method: "POST",
-        headers: getHeadersWithAuth(),
-        body: JSON.stringify(article),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    postWithAuth(
+        '/article',
+        JSON.stringify(article)
+    )
 
 export const getArticleById = (id) =>
-    fetch('/article/' + id, {
-        method: "GET",
-        headers: getBaseHeaders(),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    get('/article/' + id)
 
 export const updateArticleById = (id, article) =>
-    fetch('/article/' + id, {
-        method: "PUT",
-        headers: getHeadersWithAuth(),
-        body: JSON.stringify(article),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    putWithAuth(
+        '/article/' + id,
+        JSON.stringify(article)
+    )
 
 export const deleteArticleById = (id) =>
-    fetch('/article/' + id, {
-        method: "DELETE",
-        headers: getHeadersWithAuth(),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    delWithAuth('/article/' + id);
 
 export const likeArticleById = (id) =>
-    fetch('/article/like/' + id, {
-        method: "PUT",
-        headers: getHeadersWithAuth(),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    putWithAuth('/article/like/' + id);
+
+export const getLikeArticleStatusById = (id) =>
+    getWithAuth('/article/like/' + id);
 
 export const getAllArticles = () =>
-    fetch('/article/all', {
-        method: "GET",
-        headers: getBaseHeaders(),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
-        .then(json => json.collection)
+    get('/article/all')
+        .then(json => json.collection);
 
 export const getAllLikedArticlesForUser = () =>
-    fetch('/article/me', {
-        method: "GET",
-        headers: getHeadersWithAuth(),
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
-        .then(json => json.collection)
+    getWithAuth('/article/me')
+        .then(json => json.collection);

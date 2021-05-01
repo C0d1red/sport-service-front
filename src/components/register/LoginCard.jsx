@@ -1,5 +1,4 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -7,38 +6,43 @@ import {LoginForm} from "./LoginForm";
 import {RegisterForm} from "./RegisterForm";
 import {useStyles} from "../../styles";
 
-const texts = {
+const titles = {
     LOGIN_TITLE: "Вход",
     REGISTER_TITLE: "Регистрация"
 }
 
+const states = {
+    LOGIN: 1,
+    REGISTER: 2
+}
+
 export const LoginCard = (props) => {
     const classes = useStyles();
-    const {open, handleClose, handleLogin} = props;
-    const [isRegister, setRegister] = useState(false);
-    const [headerText, setHeaderText] = useState(texts.LOGIN_TITLE);
+    const {isOpen, handleClose, handleLogin} = props;
+    const [state, setState] = useState(states.LOGIN);
+    const [headerText, setHeaderText] = useState(titles.LOGIN_TITLE);
 
-    useEffect(() => {
-        if (open) {
-            setRegister(false);
-            setHeaderText(texts.LOGIN_TITLE);
-        }
-    }, [open]);
-
-    const handleFormSwitchClick = () => {
-        setRegister(true);
-        setHeaderText(texts.REGISTER_TITLE);
+    const setCardToLoginState = () => {
+        setState(states.LOGIN);
+        setHeaderText(titles.LOGIN_TITLE);
     }
 
+    const setCardToRegisterState = () => {
+        setState(states.REGISTER);
+        setHeaderText(titles.REGISTER_TITLE);
+    }
+
+    useEffect(() => setCardToLoginState(), [isOpen]);
+
     return (
-        <div >
-            <Dialog open={open} onClose={handleClose} fullWidth={true} className={classes.loginCard}>
+        <div>
+            <Dialog open={isOpen} onClose={handleClose} fullWidth={true} className={classes.center}>
                 <DialogTitle>{headerText}</DialogTitle>
                 <DialogContent>
-                    {isRegister ?
-                        <RegisterForm handleLogin={handleLogin}/>
+                    {state === states.LOGIN ?
+                        <LoginForm handleFormSwitchClick={setCardToRegisterState} handleLogin={handleLogin}/>
                         :
-                        <LoginForm handleFormSwitchClick={handleFormSwitchClick} handleLogin={handleLogin}/>
+                        <RegisterForm handleLogin={handleLogin}/>
                     }
                 </DialogContent>
             </Dialog>

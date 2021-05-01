@@ -1,32 +1,21 @@
-import {getBaseHeaders} from "./util";
-import {handleError} from "./ErrorHandler";
+import {post} from "./baseApi";
 
 export const register = (credentials) =>
-    fetch('/user', {
-        method: "POST",
-        headers: getBaseHeaders(),
-        body: JSON.stringify(credentials)
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
-        .then(data => localStorage.setItem("jwt", data.token))
+    post(
+        '/user',
+        JSON.stringify(credentials)
+    )
 
 export const login = (credentials) =>
-    fetch('/auth/classic', {
-        method: "POST",
-        headers: getBaseHeaders(),
-        body: JSON.stringify(credentials)
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    post(
+        '/auth/classic',
+        JSON.stringify(credentials)
+    )
         .then(data => localStorage.setItem("jwt", data.token))
 
 export const refreshToken = (token) =>
-    fetch('/token/refresh', {
-        method: "POST",
-        headers: getBaseHeaders(),
-        body: JSON.stringify(token)
-    })
-        .then(response => handleError(response))
-        .then(response => response.json())
+    post(
+        '/token/refresh',
+        JSON.stringify(token)
+    )
         .then(data => localStorage.setItem("jwt", data.token))

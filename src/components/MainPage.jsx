@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {NavLink} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useStyles} from "../styles";
-import {NavLink} from "react-router-dom";
 import {ArticlesTable} from "./article/ArticlesTable";
+import {getAllArticles} from "../api/articleApi";
 
 export const MainPage = () => {
     const classes = useStyles();
+    const [articles, setArticles] = useState([]);
+
+    const updateArticles = () => {
+        getAllArticles()
+            .then(articles => setArticles(articles));
+    }
+
+    useEffect(() => updateArticles(), [])
+
     return (
         <div>
             <div className={classes.center}>
@@ -14,7 +24,7 @@ export const MainPage = () => {
                     <AddCircleIcon color={"primary"} className={classes.createArticleIcon}/>
                 </IconButton>
             </div>
-            <ArticlesTable/>
+            <ArticlesTable articles={articles}/>
         </div>
     );
 }
