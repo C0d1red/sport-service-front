@@ -4,6 +4,8 @@ import Card from "@material-ui/core/Card";
 import {CardActionArea, Typography} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import {useStyles} from "../../styles";
+import { display } from '@material-ui/system';
+import CardActions from "@material-ui/core/CardActions";
 
 export const ShortArticleCard = (props) => {
     const classes = useStyles();

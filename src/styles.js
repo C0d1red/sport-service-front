@@ -5,12 +5,9 @@ const styles = () => ({
         flex: 1,
     },
     shortArticleCard: {
-        width: '15vw',
-        height: '15vw',
-        margin: '20px',
-        display:'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'column'
+        height: 400,
+        width: 400,
+        display:'block',
     },
     longArticleCard: {
         margin: '20px',
@@ -37,6 +34,16 @@ const styles = () => ({
     maxSize: {
         width: '100%',
         height: '100%'
+    },
+    tagCard: {
+        "& > *":{
+            height: '2vw',
+            padding: '10px',
+            textAlign: 'center',
+            backgroundColor: '#d1d1d1',
+            display:'flex',
+            justifyContent:'center'
+        }
     }
 });
 

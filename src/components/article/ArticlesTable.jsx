@@ -5,13 +5,15 @@ import {ShortArticleCard} from "./ShortArticleCard";
 export const ArticlesTable = (props) => {
     const {articles} = props;
     return (
-        <Grid container justify="center">
+        <Grid container justify="center" spacing={3} xs={12}>
             {articles.map((article) =>
-                <ShortArticleCard
-                    id={article.id}
-                    name={article.name}
-                    text={article.text}
-                />
+                <Grid item>
+                    <ShortArticleCard
+                        id={article.id}
+                        name={article.name}
+                        text={article.text}
+                    />
+                </Grid>
                 )}
         </Grid>
     );

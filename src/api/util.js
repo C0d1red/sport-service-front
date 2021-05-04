@@ -17,6 +17,7 @@ export const deleteJWT = () => {
 }
 
 export const isJWTInStorage = () => {
+    console.log('localSTORAGE: ' + (localStorage.getItem("jwt") !== null))
     return localStorage.getItem("jwt") !== null;
 }
 
