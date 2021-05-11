@@ -36,8 +36,14 @@ export const MenuBar = () => {
                 <Toolbar>
                     <ButtonGroup fullWidth size={"large"} variant="text" className={classes.leftToolBar}>
                         <Button component={NavLink} color="inherit" to={"/"}>
-                            Главная
+                            Все новости
                         </Button>
+                        {
+                            isLoggedIn &&
+                            <Button component={NavLink} color="inherit" to={"/recommended"}>
+                                Рекомендации
+                            </Button>
+                        }
                     </ButtonGroup>
                     {isLoggedIn ?
                         <ProfileMenu handleLogout={handleLogout}/>

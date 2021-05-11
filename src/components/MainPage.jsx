@@ -4,19 +4,36 @@ import {IconButton} from "@material-ui/core";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useStyles} from "../styles";
 import {ArticlesTable} from "./article/ArticlesTable";
-import {getAllArticles, getArticlesByTag} from "../api/articleApi";
+import {getAllArticles, getAllRecommendedArticlesForUser, getArticlesByTag} from "../api/articleApi";
+
+export const TYPES = {
+    all: 0,
+    recommended: 1,
+    byTag: 2
+}
 
 export const MainPage = (props) => {
     const classes = useStyles();
+    const {type} = props
     const {tag} = useParams();
     const [articles, setArticles] = useState([]);
 
-    const updateArticles = () => tag ?
-        getArticlesByTag(tag)
-            .then(articles => setArticles(articles))
-        :
-        getAllArticles()
-            .then(articles => setArticles(articles))
+    const updateArticles = () => {
+        switch (type){
+            default:
+            case TYPES.all:
+                getAllArticles()
+                    .then(articles => setArticles(articles))
+                break;
+            case TYPES.recommended:
+                getAllRecommendedArticlesForUser()
+                    .then(articles => setArticles(articles))
+                break;
+            case TYPES.byTag:
+                getArticlesByTag(tag)
+                    .then(articles => setArticles(articles))
+        }
+    }
 
     useEffect(() => updateArticles(), [tag])
 

@@ -31,5 +31,9 @@ export const getArticlesByTag = (tag) =>
         .then(json => json.collection);
 
 export const getAllLikedArticlesForUser = () =>
-    getWithAuth('/article/me')
+    getWithAuth('/article/me/liked')
+        .then(json => json.collection);
+
+export const getAllRecommendedArticlesForUser = () =>
+    getWithAuth('/article/me/recommended')
         .then(json => json.collection);
